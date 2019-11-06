@@ -200,8 +200,8 @@ let key;
 
 document.addEventListener('mousedown', (e) => {
   key = e.target.closest('.key');
-  if (!key) return;
 
+  if (!key) return;
   const event = new KeyboardEvent('keydown', {
     bubbles: true,
     code: `${key.classList[1]}`,
