@@ -179,3 +179,50 @@ const displayText = (e) => {
     }
   }
 };
+
+document.addEventListener('keydown', (e) => {
+  e.preventDefault();
+  displayText(e);
+  setAnimation(e);
+  setLang(e);
+  setToUpperCase(e);
+});
+
+document.addEventListener('keyup', (e) => {
+  setToLowerCase(e);
+  dropEffects(e);
+  pressedKeys.clear();
+});
+
+keyboard.addEventListener('selectstart', (e) => e.preventDefault());
+
+let key;
+
+document.addEventListener('mousedown', (e) => {
+  key = e.target.closest('.key');
+  if (!key) return;
+
+  const event = new KeyboardEvent('keydown', {
+    bubbles: true,
+    code: `${key.classList[1]}`,
+    key: `${key.textContent}`,
+  });
+
+  key.dispatchEvent(event);
+});
+
+document.addEventListener('mouseup', () => {
+  if (!key) return;
+
+  const event = new KeyboardEvent('keyup', {
+    bubbles: true,
+    code: `${key.classList[1]}`,
+    key: `${key.textContent}`,
+  });
+
+  key.dispatchEvent(event);
+});
+
+window.addEventListener('unload', () => {
+  localStorage.setItem('keyboardLang', `${keyboard.classList[1]}`);
+});
