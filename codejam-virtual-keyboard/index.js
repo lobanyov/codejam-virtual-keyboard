@@ -75,3 +75,28 @@ const setInitialConfig = (lang) => {
 
 keyboard.classList.add(currentLang);
 setInitialConfig(langs[currentLang]);
+
+const setLang = (e) => {
+  pressedKeys.add(e.code);
+
+  const changeLang = (previous, set) => {
+    keyboard.classList.remove(previous);
+    keyboard.classList.add(set);
+  };
+
+  if (pressedKeys.has('ControlLeft') && pressedKeys.has('AltLeft')) {
+    if (keyboard.classList.contains('ru') && !keyboard.classList.contains('capslock-active')) {
+      changeLang('ru', 'en');
+      setSymbols(en, lowerCase);
+    } else if (keyboard.classList.contains('ru') && keyboard.classList.contains('capslock-active')) {
+      changeLang('ru', 'en');
+      setSymbols(en, upperCase);
+    } else if (keyboard.classList.contains('en') && !keyboard.classList.contains('capslock-active')) {
+      changeLang('en', 'ru');
+      setSymbols(ru, lowerCase);
+    } else {
+      changeLang('en', 'ru');
+      setSymbols(ru, upperCase);
+    }
+  }
+};
