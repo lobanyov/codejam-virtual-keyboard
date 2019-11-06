@@ -114,3 +114,28 @@ const setAnimation = (e) => {
     if (err.name === 'TypeError') exceptions.add(err);
   }
 };
+
+const setToUpperCase = (e) => {
+  if (e.code === 'CapsLock' || e.key === 'Shift') {
+    if (e.repeat) return;
+    if (e.key === 'CapsLock') keyboard.classList.toggle('capslock-active');
+
+    if ((keyboard.classList.contains('capslock-active') || e.key === 'Shift') && keyboard.classList.contains('ru')) {
+      setSymbols(ru, upperCase);
+    } else if ((keyboard.classList.contains('capslock-active') || e.key === 'Shift') && keyboard.classList.contains('en')) {
+      setSymbols(en, upperCase);
+    } else if (!keyboard.classList.contains('capslock-active') && keyboard.classList.contains('ru')) {
+      setSymbols(ru, lowerCase);
+    } else {
+      setSymbols(en, lowerCase);
+    }
+  }
+};
+
+const setToLowerCase = (e) => {
+  if (e.key === 'Shift' && keyboard.classList.contains('ru') && !keyboard.classList.contains('capslock-active')) {
+    setSymbols(ru, lowerCase);
+  } else if (e.key === 'Shift' && keyboard.classList.contains('en') && !keyboard.classList.contains('capslock-active')) {
+    setSymbols(en, lowerCase);
+  }
+};
