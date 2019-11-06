@@ -100,3 +100,17 @@ const setLang = (e) => {
     }
   }
 };
+
+const setAnimation = (e) => {
+  try {
+    if (e.code === 'F5') return;
+    document.querySelector(`.${e.code}`).style.backgroundColor = 'rgb(53, 124, 78)';
+    if (e.code === 'Space') {
+      document.querySelector(`.${e.code}`).style.transform = 'rotate(1.5deg)';
+    } else {
+      document.querySelector(`.${e.code}`).style.transform = 'rotate(3deg)';
+    }
+  } catch (err) {
+    if (err.name === 'TypeError') exceptions.add(err);
+  }
+};
