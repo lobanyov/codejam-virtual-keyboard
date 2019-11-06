@@ -139,3 +139,43 @@ const setToLowerCase = (e) => {
     setSymbols(en, lowerCase);
   }
 };
+
+const dropEffects = (e) => {
+  try {
+    document.querySelector(`.${e.code}`).style.backgroundColor = '';
+    document.querySelector(`.${e.code}`).style.transform = '';
+  } catch (err) {
+    if (err.name === 'TypeError') exceptions.add(err);
+  }
+};
+
+const displayText = (e) => {
+  try {
+    const key = document.querySelector(`.${e.code}`);
+    const { code } = e;
+    const symbol = key.textContent;
+
+    if (code === 'ControlLeft' || code === 'ControlRight' || code === 'AltLeft'
+      || code === 'AltRight' || code === 'ShiftLeft' || code === 'MetaLeft'
+      || code === 'ShiftRight' || code === 'Delete' || code === 'CapsLock'
+      || code === 'ArrowLeft' || code === 'ArrowDown' || code === 'ArrowRight'
+      || code === 'ArrowUp') {
+      return;
+    } if (code === 'Enter') {
+      textarea.textContent += '\n';
+    } else if (code === 'Backspace') {
+      textarea.textContent = textarea.textContent.slice(0, textarea.textContent.length - 1);
+    } else if (code === 'Tab') {
+      e.preventDefault();
+      textarea.textContent += '\t';
+    } else {
+      textarea.textContent += `${symbol}`;
+    }
+  } catch (err) {
+    if (err.name === 'TypeError') exceptions.add(err.stack);
+
+    if (exceptions.size > 20) {
+      exceptions.clear();
+    }
+  }
+};
